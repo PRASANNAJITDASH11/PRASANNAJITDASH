@@ -1,0 +1,592 @@
+
+how to stream video from webcam?
+Post Reply
+
+Search this topic…
+27 posts 
+1
+2
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+how to stream video from webcam?
+Quote
+Wed Jun 05, 2013 11:20 pm
+
+Hello,
+I would like to stream video from a logitech C200 webcam connected to my Pi. It is possible, others have done it, but I can't get it done so who can help me?
+I first tried this:
+http://robotblogging.blogspot.nl/2013/0 ... on-10.html
+This works, but only at a frame rate of 11 frames/s or less. and it's not a stream to the web.
+Then I tried this:
+http://pingbin.com/2012/12/raspberry-pi ... er-motion/
+This doesn't work: firefox can't find the webpage.
+Any ideas what went wrong or other methods that can do the trick?
+please keep in mind I'm a beginner.
+Thanks, Jan
+Last edited by robotjan on Thu Jun 06, 2013 6:56 pm, edited 1 time in total.
+SirLagz
+Posts: 1705
+Joined: Mon Feb 20, 2012 8:53 am
+Location: Perth, Australia
+Contact: Website 
+Re: how to stream video from webcam?
+Quote
+Thu Jun 06, 2013 8:38 am
+
+Motion, ffmpeg, and mjpeg-streamer can all stream video.
+If you want to stream to the internet, then there's the additional issue of port forwarding.
+
+I'm assuming when you tried motion, you meant that firefox can't find the page ?
+My Blog - http://www.sirlagz.net
+Visit my blog for Tips, Tricks, Guides and More !
+WiFi Issues ? Have a look at this post ! http://www.raspberrypi.org/phpBB3/viewtopic.php?f=28&t=44044
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+Re: how to stream video from webcam?
+Quote
+Thu Jun 06, 2013 6:56 pm
+
+I'm assuming when you tried motion, you meant that firefox can't find the page ?
+Yes, sorry for the typo.
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+Re: how to stream video from webcam?
+Quote
+Thu Jun 06, 2013 7:30 pm
+
+Some extra info:
+I meant I just want to be able to see the video on my laptop.
+I use the inet address that is shown after "lo" when I type ifconfig. It's 127.0.0.1 I tried this with :8080 and :8081 added to it. no result.
+There's no inet address listed at "eth0"
+I hope this helps to clarify things.
+regards,
+Jan
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Thu Jun 06, 2013 11:35 pm
+
+This is a nice tuto for mjpeg_streamer
+
+
+http://wolfpaulus.com/jounal/embedded/r ... ypi_webcam
+
+Please be sure that you ave the latest kernel.At least above preemp #399. Before that camera will stop working for nothing.
+
+It will work well if the C-200 Camera is mjpeg capable.
+
+use uvcdynctrl -f and check for MJPEG.
+
+Daniel
+SirLagz
+Posts: 1705
+Joined: Mon Feb 20, 2012 8:53 am
+Location: Perth, Australia
+Contact: Website 
+Re: how to stream video from webcam?
+Quote
+Fri Jun 07, 2013 1:16 am
+
+robotjan wrote:
+Some extra info:
+I meant I just want to be able to see the video on my laptop.
+I use the inet address that is shown after "lo" when I type ifconfig. It's 127.0.0.1 I tried this with :8080 and :8081 added to it. no result.
+There's no inet address listed at "eth0"
+I hope this helps to clarify things.
+regards,
+Jan
+lo is the loopback address, you won't be able to get to that from the laptop.
+If there's no inet address listed at eth0 then the Pi isn't conected to the network.
+Are you trying to connect via WiFi or Ethernet ?
+My Blog - http://www.sirlagz.net
+Visit my blog for Tips, Tricks, Guides and More !
+WiFi Issues ? Have a look at this post ! http://www.raspberrypi.org/phpBB3/viewtopic.php?f=28&t=44044
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+Re: how to stream video from webcam?
+Quote
+Fri Jun 07, 2013 7:33 pm
+
+Thanks for the tip:
+
+"If there's no inet address listed at eth0 then the Pi isn't conected to the network."
+
+That might be the cause of my problem, but the funny thing is, I can surf on the inetrnet with iceweasel.
+I use a Wifi dongle.
+Any clues how to find the right inet address?
+
+Thanks!
+Jan
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Fri Jun 07, 2013 8:30 pm
+
+Well then is wlan0 instead of eth0
+
+
+use ifconfig on the Rapsberry Pi and check the ip at wlan0 and use this ip on your other computer browser. Don't use explorer if you do streaming (It won't work). Use chrome , Safari or firefox. On Android tablet use chrome.
+
+
+Daniel
+demonmaestro
+Posts: 21
+Joined: Fri Jun 07, 2013 10:07 am
+Re: how to stream video from webcam?
+Quote
+Tue Jun 11, 2013 7:41 pm
+
+Okay I have used this guide
+http://wolfpaulus.com/jounal/embedded/r ... ypi_webcam
+and
+http://iqjar.com/jar/live-stream-from-y ... pberry-pi/
+
+I have notice that the static will work but trying to stream it just will not show anything nor load the page. BUT if i use the javascript it will work fine. Im lost..
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Tue Jun 11, 2013 8:17 pm
+
+If you use microsoft internet explorer streaming doesn't work. Use chrome, firefox or safari
+
+Daniel
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+Re: how to stream video from webcam?
+Quote
+Tue Jun 11, 2013 10:57 pm
+
+Daniel,
+I have figured out how to find the right IP address: I found it in the menu of my router. (see the image attached) It's actually the same as listed at wlan0, so you were right. But when use it in Firefox, it can't connect to it. I tried it 'as is' and with :8080 and :8081 added, none of these work. What now?
+
+Thanks,
+Jan
+Attachments
+ScreenHunter_024.jpg
+ScreenHunter_024.jpg (20.6 KiB) Viewed 100140 times
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Tue Jun 11, 2013 11:45 pm
+
+Hi Robotjan,
+
+I assume that you have your raspberry pi attached to a monitor.
+
+Normally to get the ip , use the raspberry console (terminal).
+and type
+
+"sudo ifconfig" . This will list all network device with networks info.
+Code: Select all
+
+root@raspberrypi:~# sudo ifconfig
+lo        Link encap:Boucle locale  
+          inet adr:127.0.0.1  Masque:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:11 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:0 
+          RX bytes:880 (880.0 B)  TX bytes:880 (880.0 B)
+
+wlan0     Link encap:Ethernet  HWaddr 00:87:23:81:56:f0  
+          inet adr:10.11.12.7  Bcast:10.11.12.255  Masque:255.255.255.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:180127 errors:0 dropped:49605 overruns:0 frame:0
+          TX packets:212400 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 lg file transmission:1000 
+          RX bytes:20768108 (19.8 MiB)  TX bytes:299418218 (285.5 MiB)
+
+This tell me that my model A local IP is 10.11.12.7
+
+There are somes checks you should do. (this will be all done from a raspberry pi console).
+
+1- Is motion running ?
+type "sudo ps -e a" and check if motion is there.
+
+or use "top" to see if motion is there. Top will also show you the % of cpu usage each process use.
+
+2- Is port 8082 open ?
+
+use the command "sudo netstat -l -p" . This will output a list of all listening port with the corresponding program. The port 8082 should be display and use by motion.
+
+3- Maybe first thing is to check if the camera is working
+
+use "sudo uvcdynctrl -f" . This will display all the mode and resolution of the webcam
+
+use "uvccapture -m -v -x640 -y480 -oimage.jpg"
+
+this should store an image from your webcam.
+
+4- is Kernel version >= preemp #399
+
+do " cat /proc/version" The kernel version has to be higher or equal to 399 Since that version, a lot of webcam problem are fixed!
+
+5- Start motion manually and check if there is error reporting
+
+sudo /usr/bin/motion
+
+6- The normal method to run motion is to call the service
+
+service motion start
+
+and to stop it
+
+service motion stop.
+
+Also be sure that /etc/init.d/motion is executable
+
+do "ls -l /etc//init.d/motion" and check for the 'x'
+
+if it is not executable do "sudo chmod +x /etc/init.d/motion"
+
+Normally when you start the raspberry pi motion starts also.
+
+
+
+7- And finally you will need to check the config file in
+
+/etc/motion/motion.conf
+
+Image format ? Resolution ?
+Output Folder has user motion permission ?
+
+which you luck,
+
+Daniel
+demonmaestro
+Posts: 21
+Joined: Fri Jun 07, 2013 10:07 am
+Re: how to stream video from webcam?
+Quote
+Wed Jun 12, 2013 1:31 am
+
+danjperron wrote:
+If you use microsoft internet explorer streaming doesn't work. Use chrome, firefox or safari
+
+Daniel
+I dont use IE. I was using Chrome. Any idea there?
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Wed Jun 12, 2013 1:59 am
+
+Hi demonmaestro,
+
+what is your OS ? Mac , windows xp,7,8 , Android or linux ?
+
+Did you try on an other computer. What about Safari or firefox?
+
+My main computer is a Mac. But I do have PCs and all of them are working on all mode except Java which I don't want to install on some machines.
+
+My wife IPad and my Samsung note tablet work on Static, Stream and Javascript!
+
+P.S. On Android tablet you need to use chrome!
+
+This is weird that Static works but not stream. They are more or less link. Did you try to reduce the speed ? did you try to reduce the resolution ? What is your resolution settings and what is your webcam?
+
+
+Daniel
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Wed Jun 12, 2013 2:18 am
+
+Hi demonmaestro,
+
+Just wonder if you missing an avi player on your browser.
+
+
+If you type directly view-source:http://your_rpi_IP:8080/?action=stream on chrome
+does the page display something , a lot of random characters, with the term "AVI" on the first line?
+
+Also try to open flux with vlc http://your_rpi_IP:8080/?action=stream
+On my mac the video is broken but it display something at least.
+
+Daniel
+robotjan
+Posts: 7
+Joined: Mon Jun 03, 2013 5:34 pm
+Re: how to stream video from webcam?
+Quote
+Sat Jun 22, 2013 11:05 pm
+
+Daniel,
+Thanks for all the tips you gave me!
+I updated and upgraded a few weeks ago, so the kernel must be OK.
+
+I have partial succes! I used motion, and changed a few settings in the config file. I forgot which ones which is not very clever...
+But - it worked! But when I stopped motion and restarted, I lost connection again.. :(
+question 1: any ideas what caused this?
+2: the frame rate is still too low, how can I increase this?
+3: the video has a delay of a few seconds, is this normal? Can I fix this somehow?
+I hope you can help.
+Thanks for everything,
+
+Jan
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Sun Jun 23, 2013 1:09 am
+
+Hi Robotjan,
+
+yes you are correct!
+
+Motion has a big lag and it has low frames rate. Motion main purpose is to analyze consecutive frames and check for difference. When it founds a number of n pixels change, it will start to capture images or record video. A lot of process power is used to analyze the image.
+
+The better alternative is mjpeg streamer which doesn't analyze the image and just deliver the stream from the webcam directly. The problem with mjpeg streamer is that it needs a webcam with mjpeg capabilities.
+
+
+P.S. Did the c-200 has mjpeg capabilities "sudo uvcdynctrl -f" and check for "mjpeg" word.
+
+if yes than mjepg streamer will work way better than motion.
+
+this is my script for 640x480
+Code: Select all
+
+killall mjpg_streamer
+/usr/local/bin/mjpg_streamer -i "/usr/local/lib/input_uvc.so -n -f 30 -r 640x480" -o "/usr/local/lib/output_http.so -p 10088 -w /usr/local/www" &
+
+
+use firefox open the url http://yourRaspberrypiIP:10088
+
+I assume that you will follow the instruction on how to install mjpeg streamer at the top of this forum.
+
+P.S. I know that you did apt-get upgrade. But to update the kernel you need to do it twice with a reboot in between.
+check your kernel using "sudo cat /proc/version ". The number between # and PREEMPT has to be above 399.
+
+
+This is a small video of my robot car I took this winter by recording the desktop of my mac. one webcam show the direct view of the robot (connected to the mac) and the other webcam, on the car, was running mjpeg streamer at the Raspberry PI and was streaming to the mac. The lag was minimal. I control my robot from my work office which is 100km away of my home and got less than 1 sec lag.
+
+https://dl.dropboxusercontent.com/u/488 ... botCar.mpg
+
+
+B.T.W. Is your raspberry pi connected to an hdmi monitor? Does uvcview works?
+
+Daniel
+nemo096
+Posts: 26
+Joined: Wed Dec 26, 2012 10:54 am
+Re: how to stream video from webcam?
+Quote
+Sun Jul 28, 2013 4:17 pm
+
+Hi danjperron
+
+I watched your video of your car from 100km away - pretty cool
+
+Is there any way you could do a tutorial?
+
+Thnaks,
+Ethan
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Sun Jul 28, 2013 5:26 pm
+
+Hi Ethan,
+
+Yes I should,
+
+I will see what I could do about it.
+
+I do have so many applications that I did with the Raspberry Pi that I should put all of it on a website.
+
+Right now you could check some of my documentations on this french post.
+It should be easy to translate since all the source code and schematic are in english.
+
+http://www.raspberrypi.org/phpBB3/viewt ... 25#p347925
+
+I use mjpeg streamer for video. Motion is not adequate! too much lag. The web cam has to be mjpeg capable.
+The current webcam is a logitech C-260 but it was a microsoft vx-7000. (From the video, I just swapped them).
+
+This is the script I use to start mjpeg streamer in (1024x576). Best resolution vs lag.
+Code: Select all
+
+killall mjpg_streamer
+/usr/local/bin/mjpg_streamer -i "/usr/local/lib/input_uvc.so -n -f 10 -r 1024x576" -o "/usr/local/lib/output_http.so -p 10088 -w /usr/local/www" &
+
+The motor driver is base on LN298N but I bought two TB6612FNG dual motor driver from RobotShop.ca (RB-POL-110). I didn't test them yet but I want to reduce the voltage drop. It is around 3 Volts from the LN298N which are darlington transistor.
+
+I use python to drive the GPIO pins. A pololu serial servo controls the R/C servo. Now you could use software driver directly at the Raspberry Pi or use my small project with a small PIC cpu to control the R/C servo.
+
+This is my post for the small cpu to run 4 R/C servo. (The code for my small robot need to be modified since it is for the Pololu serial board).
+
+http://www.raspberrypi.org/phpBB3/viewt ... 95#p335295
+
+And finally the code to remote control the unit via a webpage. I use webiopi, a python web server.
+
+http://www.raspberrypi.org/phpBB3/viewt ... 89#p353089
+
+
+Maybe the first thing to do will be to create the video streaming
+
+This is a nice tutorial on how to do it
+http://wolfpaulus.com/jounal/embedded/r ... ypi_webcam
+
+P.S. Don't use internet explorer, it doesn't work , use Chrome, Firefox or Safari
+Have fun,
+
+Daniel
+justinpoiroux
+Posts: 19
+Joined: Wed Feb 06, 2013 10:47 pm
+Re: how to stream video from webcam?
+Quote
+Wed Jul 31, 2013 10:05 pm
+
+Does MJPG-Streamer have IP camera streaming capabilities?
+demonmaestro
+Posts: 21
+Joined: Fri Jun 07, 2013 10:07 am
+Re: how to stream video from webcam?
+Quote
+Fri Aug 16, 2013 1:14 pm
+
+whats going on here. I am trying to get the quickcam sphere to work but it keeps telling me this.
+Code: Select all
+
+pi@RaspiCam ~/mjpg-streamer/mjpg-streamer $ sudo ./mjpg_streamer -i "./input_uvc.so" -o "./output_http.so -w ./www -p 8080"
+MJPG Streamer Version: svn rev:
+ i: Using V4L2 device.: /dev/video0
+ i: Desired Resolution: 640 x 480
+ i: Frames Per Second.: 5
+ i: Format............: MJPEG
+Unable to set format: 1196444237 res: 640x480
+ Init v4L2 failed !! exit fatal
+ i: init_VideoIn failed
+pi@RaspiCam ~/mjpg-streamer/mjpg-streamer $ lsusb
+Bus 001 Device 002: ID 0424:9512 Standard Microsystems Corp.
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 003: ID 0424:ec00 Standard Microsystems Corp.
+Bus 001 Device 004: ID 05e3:0608 Genesys Logic, Inc. USB-2.0 4-Port HUB
+Bus 001 Device 005: ID 046d:08b5 Logitech, Inc. QuickCam Sphere
+Bus 001 Device 006: ID 046d:0825 Logitech, Inc. Webcam C270
+pi@RaspiCam ~/mjpg-streamer/mjpg-streamer $
+However it will work with the c270.
+Thanks for the help
+PiSi
+Posts: 37
+Joined: Mon Jan 14, 2013 9:41 am
+Re: how to stream video from webcam?
+Quote
+Sat Sep 14, 2013 11:46 pm
+
+Looks like my webcam didn't support mjpg - is there a way to get mjpg streamer to work with it?
+
+Cheers,
+
+Simon
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Sun Sep 15, 2013 1:50 am
+
+Hi PiSi,
+
+Install the package v4l-utils (if you are using raspian).
+Code: Select all
+
+sudo apt-get install v4l-utils
+and run this command
+Code: Select all
+
+v4l2-ctl --list-formats-ext
+This will show all the formats that your webcam outputs.
+
+Check for MJPG format in the list.
+
+And yes mjpeg streamer is to stream mjpeg webcam capable. Maybe it s possible to stream something else but I don't thing so.
+
+Daniel
+PiSi
+Posts: 37
+Joined: Mon Jan 14, 2013 9:41 am
+Re: how to stream video from webcam?
+Quote
+Sun Sep 15, 2013 12:54 pm
+
+Thanks Dan,
+
+I used uvcdynctrl and it didn't mjpg format.
+
+From searching it looks like this camera doesn't support it.
+
+Is there another app that can do the same as mjpg streamer using the raw output and stream it?
+
+Or a way to add mjpg compression to the images from the camera and then use mjpg streamer?
+
+Or can someone recommend a cheap, but good webcam that does do mjpg format?
+
+Cheers,
+
+Simon
+danjperron wrote:
+Hi PiSi,
+
+Install the package v4l-utils (if you are using raspian).
+Code: Select all
+
+sudo apt-get install v4l-utils
+and run this command
+Code: Select all
+
+v4l2-ctl --list-formats-ext
+This will show all the formats that your webcam outputs.
+
+Check for MJPG format in the list.
+
+And yes mjpeg streamer is to stream mjpeg webcam capable. Maybe it s possible to stream something else but I don't thing so.
+
+Daniel
+danjperron
+Posts: 3393
+Joined: Thu Dec 27, 2012 4:05 am
+Location: Québec, Canada
+Re: how to stream video from webcam?
+Quote
+Sun Sep 15, 2013 1:22 pm
+
+None that I know of,
+
+The advantage of mjpeg format is the compress data. The Rpi don't have to deal with the data, it is simply pass over to the net. This is why it is so fast.
+
+You could use ffmpeg and stream it but you will see that frame rate is very slow.
+
+Logitech mjpeg capable webcam are cheap anyway. Same price has RPi camera but in my own opinion they are easier to stream since they just pass the data over and the Rpi doesn't convert it.
+
+Maybe some one will have some H264 streamer for the RPi camera but I didn't find one yet.
+
+Daniel
