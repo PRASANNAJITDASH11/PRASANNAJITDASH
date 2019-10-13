@@ -1,0 +1,72 @@
+EXAMPLES
+% [video, audio] = mmread('chimes.wav'); % read whole wav file
+% wavplay(audio.data,audio.rate);
+%
+% video = mmread('mymovie.mpg'); % read whole movie
+% movie(video.frames);
+%
+% video = mmread('mymovie.mpg',1:10); %get only the first 10 frames
+%
+% video = mmread('mymovie.mpg',[],[0 3.5]); %read the first 3.5 seconds of the video
+%
+% [video, audio] = mmread('chimes.wav',[],[0 0.25]); %read the first 0.25 seconds of the wav
+% [video, audio] = mmread('chimes.wav',[],[0.25 0.5]); %read 0.25 to 0.5 seconds of the wav, there is no overlap with the previous example.
+%
+% read a movie directly from a URL  
+% video = mmread('http://www.nature.com/neuro/journal/v9/n4/extref/nn1660-S8.avi');  
+%
+% video = mmread('mymovie.mpg',[],[],false,true); %read all frames, disable audio
+%
+% mmread('mymovie.mpg',[],[],false,false,'processFrame'); %Use inline processing for all frames in a movie using the function processFrame.m
+%
+
+
+
+
+video = mmread('D:\18__september__2019\mmread\34101_bigmanjoe_wind-turbine-whine-2.mpg'); % read whole movie
+movie(video.frames);
+;
+
+implay('D:\18__september__2019\mmread\34101_bigmanjoe_wind-turbine-whine-2.mpg');
+
+
+video = mmread('34101_bigmanjoe_wind-turbine-whine-2.mpg'); % read whole movie
+movie(video.frames);
+
+======================================[40-watt-windmil]==mp4
+https://youtu.be/eQkI6PUlrG0
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y3p775vbBDI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+======================[xylophone]===========================URL
+https://youtu.be/y3p775vbBDI
+
+https://youtu.be/y3p775vbBDI
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/y3p775vbBDI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+=========================[windturbine ]==================================
+https://youtu.be/qMYzGRqBu6Y
+==========================================================================
+mov=VideoReader('D:\18__september__2019\Windturbine\34101_bigmanjoe_wind-turbine-whine-2.mp4');
+nFrames=mov.NumberOfFrames;
+for i=1:nFrames
+  videoFrame=read(mov,i);
+  imshow(videoFrame);
+
+end
+
+axes(handles.axes4),movie(gcf,videoFrame)
+
+
+===========================================================================
+
+videoFReader = vision.VideoFileReader('D:\18__september__2019\Windturbine\34101_bigmanjoe_wind-turbine-whine-2.mp4');
+videoPlayer = vision.VideoPlayer;
+while ~isDone(videoFReader)
+  videoFrame = videoFReader();
+  videoPlayer(videoFrame);
+  pause(0.1)
+end
+release(videoPlayer);
+release(videoFReader);

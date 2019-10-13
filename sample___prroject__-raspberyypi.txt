@@ -1,0 +1,36 @@
+Any way to add alsa support to ffmpeg without recompiling?
+Quote
+Sun Feb 11, 2018 6:56 pm
+
+Hi! I have ffmpeg compiled and running based on these instructions. My USB mini mic is known-working, because:
+
+arecord -D plughw:1,0 -d 3.0 test.wav && aplay test.wav
+
+results in sound coming out of my earphones, as expected. But when I attempt to feed in sound from a USB mini mic via:
+
+sudo ffmpeg -f alsa -i hw:1 -t 30 out.wav
+
+I get the error
+
+Unknown input format: 'alsa'
+
+
+Based on this StackExchange answer, it looks like I may not have had alsa support configured when I compiled ffmpeg.
+
+On my machine, grep alsa configure returns:
+Code: Select all
+
+  --disable-alsa           disable ALSA support [autodetect]
+    alsa
+alsa_indev_deps="alsa"
+alsa_outdev_deps="alsa"
+enabled alsa && check_pkg_config alsa alsa "alsa/asoundlib.h" snd_pcm_htimestamp ||
+    check_lib alsa alsa/asoundlib.h snd_pcm_htimestamp -lasound
+I tried sudo apt-get install libasound2-dev after the fact, but that doesn't fix the problem.
+
+Is there a way to "install" support in ffmpeg for alsa without recompiling ffmpeg from scratch?
+
+Thanks!
+
+then use sudo apt disp-upgrade
+ s

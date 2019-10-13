@@ -1,0 +1,45 @@
+EXAMPLES
+% [video, audio] = mmread('chimes.wav'); % read whole wav file
+% wavplay(audio.data,audio.rate);   //audio.data is the sound -in decibel, //audio.rate is the signal to noise ratio i.e. the 
+% streaming video stream frequency)
+
+% video = mmread('mymovie.mpg'); % read whole movie
+% movie(video.frames);
+%
+% video = mmread('mymovie.mpg',1:10); %get only the first 10 frames
+%
+% video = mmread('mymovie.mpg',[],[0 3.5]); %read the first 3.5 seconds of the video
+%
+% [video, audio] = mmread('chimes.wav',[],[0 0.25]); %read the first 0.25 seconds of the wav
+% [video, audio] = mmread('chimes.wav',[],[0.25 0.5]); %read 0.25 to 0.5 seconds of the wav, there is no overlap with the previous example.
+%
+% read a movie directly from a URL  
+% video = mmread('http://www.nature.com/neuro/journal/v9/n4/extref/nn1660-S8.avi');  
+%
+% video = mmread('mymovie.mpg',[],[],false,true); %read all frames, disable audio
+%
+% mmread('mymovie.mpg',[],[],false,false,'processFrame'); %Use inline processing for all frames in a movie using the function processFrame.m
+%
+
+
+
+
+
+
+[video,audio] = mmread('D:\19__September__2019\176235__soundslikewillem__wind-turbine.wav');
+wavplay(audio.data,audio.rate);
+
+
+
+>> audio
+
+audio = 
+
+       nrChannels: 2   %two pass filter
+             rate: 44100   %this is the frequency in decibel
+             bits: 16  %number of bits per density i.e. DBSCAN is the algorithm -which is mandalyn theorem 
+    nrFramesTotal: 566
+             data: [578560x2 double]
+           frames: {1x566 cell}
+    totalDuration: 13.1262         
+            times: [1x566 double]

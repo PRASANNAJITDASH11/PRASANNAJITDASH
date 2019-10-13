@@ -1,0 +1,10 @@
+$ sudo apt-get update
+$ sudo apt-get dist-upgrade
+$ sudo apt-get upgrade
+
+
+sudo raspi-config
+
+The sudo is required because you will be changing files that you do not own as the pi user.
+
+You should see a blue screen with options in a grey box in the centre, like so:

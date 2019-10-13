@@ -1,0 +1,26 @@
+(4)	Implementation of Three Important Image morphology Algorithms on FPGA Hardware and a Comparison with its MATLAB Implementation
+
+
+freesound 
+
+
+username 
+
+KUNADASH
+
+
+https://youtu.be/eQkI6PUlrG0
+
+
+https://youtu.be/eQkI6PUlrG0
+
+
+mov=VideoReader('D:\18__september__2019\Windturbine\34101_bigmanjoe_wind-turbine-whine-2.mp4');
+nFrames=mov.NumberOfFrames;
+for i=1:nFrames
+  videoFrame=read(mov,i);
+  imshow(videoFrame);
+
+end
+
+axes(handles.axes4),movie(gcf,videoFrame)
